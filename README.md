@@ -6,25 +6,25 @@
 
 1. 首先拉取 nerfstudio 所需的 Docker 镜像。
 
-   ```sh
+   ```pwsh
    docker pull dromni/nerfstudio:0.1.18
    ```
 
 2. 启动需要的 Docker 容器。
 
-   ```sh
+   ```pwsh
    docker run --gpus all -u lerf -v D:/lerf-repro/workspace:/workspace/ -v D:/lerf-repro/.cache/:/home/user/.cache/ -p 7007:7007 --name lerf -it --shm-size=12gb dromni/nerfstudio:0.1.18
    ```
 
 3. 启动 Docker 容器并且进行初始化。
 
    ```sh
-   cd /workspace/
-   sudo apt update
-   git clone https://github.com/kerrj/lerf
-   cd /workspace/lerf
-   python -m pip install -e .
-   ns-install-cli
+   cd /workspace/ && \
+   sudo apt update && \
+   git clone https://github.com/kerrj/lerf && \
+   cd /workspace/lerf && \
+   python3 -m pip install -e . && \
+   ns-install-cli && \
    ns-train -h
    ```
 

@@ -21,7 +21,15 @@
    ```sh
    cd /workspace/ && \
    sudo apt update && \
-   git clone https://github.com/kerrj/lerf && \
+   while (true)
+   do
+   {
+      git clone https://github.com/kerrj/lerf
+      if [ $? -eq 0 ]; then
+          break
+      fi
+   }
+   done && \
    cd /workspace/lerf && \
    python3 -m pip install -e . && \
    ns-install-cli && \

@@ -1,5 +1,94 @@
 # LERF
 
+## 可视化
+
+- Hide Scene
+- rgb/relevancy/composited
+
+## 关键词
+
+## 论文
+
+- Waldo Kitchen
+  - Multi-Scale Semantics
+    - Utensils
+    - Wooden spoon
+  - Abstract Queries
+    - Electricity
+  - Text Reading
+    - Boops
+  - Long-Tail Objects
+    - Blue dish soap
+    - Waldo
+    - Paper Towel Roll
+  - Visual Properties
+    - Yellow
+  - Fig. 5
+    - Wooden spoon
+  - Fig. 6
+    - ?
+  - Fig. 7
+    - Sink
+    - Mug
+  - FIg. 9
+    - Cookbooks
+    - Olive oil
+- Teatime
+  - Fig. 5
+    - stuffed bear
+- Bookstore
+  - Fig. 3
+    - embroidery
+    - the cookie bible
+    - marie kondo
+
+## 严佬
+
+- Waldo Kitchen
+  - pot
+
+### teatime
+
+两只玩偶的下午茶时间。
+
+复现部分：
+
+整活部分：
+
+- bear
+- dish
+- desk
+- table
+- edge
+- air
+- human
+- leg
+- bag
+- cup
+- nose
+- chair
+- tile
+- sitting human
+- woman
+
+### book_store
+
+- book
+- ground
+- floor
+- ground
+- bookcover
+- bookstand
+- bookstand third
+- bookshelf
+- piano
+- recipe
+- cook
+- cookbook
+- wooden
+- dark
+- yellow
+
 ## 复现过程
 
 前两步参见 [nerfstudio 安装教程](https://docs.nerf.studio/quickstart/installation.html)。
@@ -71,6 +160,7 @@ scp -r -P 17766 ~/Downloads/models--laion--CLIP-ViT-B-16-laion2B-s34B-b88K.zip r
 ```sh
 x11vnc -display 127.0.0.1:0 -create -rfbport 6006
 x11vnc -display localhost:0 -create -rfbport 6006
+uAVdJPAQqkTv
 
 ssh -p 11650 root@connect.westb.seetacloud.com
 ssh -CNg -L 6006:127.0.0.1:6006 root@123.125.240.150 -p 42151 # https://www.autodl.com/docs/ssh_proxy/

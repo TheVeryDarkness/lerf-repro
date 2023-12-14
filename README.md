@@ -57,20 +57,30 @@ scp -r -P 17766 ~/Downloads/Datasets-20231209T150610Z-001.zip root@connect.westc
 
 ```sh
 # 很好用
-scp -r -P 17766 ~/Downloads/Datasets-20231209T150610Z-001.zip root@connect.westc.gpuhub.com:/root
+scp -r -P 17766 ~/Downloads/models--laion--CLIP-ViT-B-16-laion2B-s34B-b88K.zip root@connect.westc.gpuhub.com:/root
+```
+
+```sh
+x11vnc -display 127.0.0.1:0 -create -rfbport 6006
+x11vnc -display localhost:0 -create -rfbport 6006
+
+ssh -p 11650 root@connect.westb.seetacloud.com
+ssh -CNg -L 6006:127.0.0.1:6006 root@123.125.240.150 -p 42151 # https://www.autodl.com/docs/ssh_proxy/
+ssh -CNg -L 6006:127.0.0.1:6006 root@connect.westb.seetacloud.com -p 11650
 ```
 
 ```sh
 #!/bin/bash
 set -eux
 model=$1
-ns-train lerf --data /root/autodl-tmp/data/Datasets/$model --output-dir /root/autodl-tmp/output --viewer.websocket-port 6006 --vis viewer_beta --viewer.make-share-url True | tee -a /root/autodl-tmp/logs/$model.log
+ns-train lerf --data /root/autodl-tmp/data/Datasets/$model --output-dir /root/autodl-tmp/output --viewer.websocket-port 7007 --viewer.websocket-port-default 7007 --vis viewer | tee -a /root/autodl-tmp/logs/$model.log
 ```
 
 ```sh
 # 这个被前面的脚本替代了
+set -eux
 model=book_store
-ns-train lerf --data /root/autodl-tmp/data/Datasets/$model --output-dir /root/autodl-tmp/output --viewer.websocket-port 6006 --vis viewer_beta --viewer.make-share-url True | tee -a /root/autodl-tmp/logs/$model.log; /usr/bin/shutdown
+ns-train lerf --data /root/autodl-tmp/data/Datasets/$model --output-dir /root/autodl-tmp/output --viewer.websocket-port 6006 --viewer.websocket-port-default 6006 --vis viewer | tee -a /root/autodl-tmp/logs/$model.log; /usr/bin/shutdown
 ```
 
 ```sh
@@ -82,5 +92,5 @@ host=u284056-9dfc-50b47bb3.westb.seetacloud.com
 port=8443
 ssh -L 7007:$host:$port $user@$host
 # https://viewer.nerf.studio/versions/23-05-15-1/?websocket_url=ws://localhost:6006
-# https://viewer.nerf.studio/versions/23-05-15-1/?websocket_url=ws://lu284056-9dfc-50b47bb3.westb.seetacloud.com:8443
+# https://viewer.nerf.studio/versions/23-05-15-1/?websocket_url=wss://lu284056-9dfc-50b47bb3.westb.seetacloud.com:8443
 ```

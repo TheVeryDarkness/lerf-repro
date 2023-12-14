@@ -81,7 +81,19 @@ ssh -CNg -L 6006:127.0.0.1:6006 root@connect.westb.seetacloud.com -p 11650
 #!/bin/bash
 set -eux
 model=$1
-ns-train lerf --data /root/autodl-tmp/data/Datasets/$model --output-dir /root/autodl-tmp/output --viewer.websocket-port 7007 --viewer.websocket-port-default 7007 --vis viewer | tee -a /root/autodl-tmp/logs/$model.log
+
+CKPT="/root/autodl-tmp/output/$model/lerf/latest/nerfstudio_models"
+LOAD=""
+if [ -d $CKPT ]; then
+    LOAD="--load-dir $CKPT"
+fi
+
+STEP=""
+if [ $# -gt 1 ]; then
+    STEP="--optimizers.fields.scheduler.max-steps $2"
+fi
+
+ns-train lerf --data /root/autodl-tmp/data/Datasets/$model --output-dir /root/autodl-tmp/output --timestamp latest $LOAD $STEP --viewer.websocket-port 7007 --viewer.websocket-port-default 7007 --vis viewer | tee -a /root/autodl-tmp/logs/$model.log
 ```
 
 ```sh

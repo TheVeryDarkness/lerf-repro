@@ -41,6 +41,19 @@
     - embroidery
     - the cookie bible
     - marie kondo
+- Ramen
+  - Fig. 3 & Fig. 5
+    - eggs
+    - nori
+    - glass of water
+- Figurines
+  - cartoon
+  - bath toy
+  - toy elephant
+  - jake from adventure time
+  - waldo
+  - leaf (failures)
+  - table (failures)
 
 ## 严佬
 
@@ -88,6 +101,13 @@
 - wooden
 - dark
 - yellow
+
+### Wadlo Kitched
+
+整活：
+
+- Holder
+- Handle
 
 ## 复现过程
 

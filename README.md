@@ -54,6 +54,9 @@
   - waldo
   - leaf (failures)
   - table (failures)
+- Bouquet
+  - lily
+  - vase
 
 ## 严佬
 
@@ -102,7 +105,7 @@
 - dark
 - yellow
 
-### Wadlo Kitched
+### Wadlo Kitchen
 
 整活：
 

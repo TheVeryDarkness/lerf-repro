@@ -227,3 +227,35 @@ ssh -L 7007:$host:$port $user@$host
 # https://viewer.nerf.studio/versions/23-05-15-1/?websocket_url=ws://localhost:6006
 # https://viewer.nerf.studio/versions/23-05-15-1/?websocket_url=wss://lu284056-9dfc-50b47bb3.westb.seetacloud.com:8443
 ```
+
+```sh
+rsync -auv -e "ssh -p $port" ~/.cache/huggingface/hub/$model_name $user@$host:/home/miyan/.cache/huggingface/hub/
+
+python -m pip uninstall -y lerf && python -m pip install ./lerf
+```
+
+## 改进的尝试
+
+我们尝试了很多最近的新工作，并尝试将其整合在一起。
+
+最终我们选择了，将原先模型中的 OpenCLIP 实现替换为 EVA02，并添加了 SAM 场。
+
+### SigLIP
+
+我们尝试了一下 SigLIP（`ViT-SO400M-14-SigLIP`），但发现表现有所下降。
+
+我们猜测是因为 Sigmoid 函数并不适合该问题。
+
+### DINOv2
+
+我们尝试将 LERF 中使用的 DINO 替换为 DINO v2，但是没有明显的改善，并且 DINO v2 只支持 size 为 14 的 patch，替换后会引入修改输入图片尺寸等很多麻烦。
+
+### NeRRF
+
+我们推测，复现过程中 hand_hand 和 ramen 场景出现了扭曲现象，是因为这两个场景中存在具有反射和折射效果的物体。
+
+我们调研了相关的工作，发现 NeRRF，但由于 NeRRF 的输入中需要深度信息，无法直接用于 LERF 使用的数据集，我们最终没能在本次大作业中使用该模型。
+
+### Instant NGP
+
+虽然 NeRF Studio 中包含了 Instant NGP，但是两个模型的输出不完全相同，所以无法直接采用，最后作罢。

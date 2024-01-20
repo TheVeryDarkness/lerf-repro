@@ -269,3 +269,13 @@ rsync -auv -e 'ssh -p 31654' /Users/huangboyi/Projects/lerf-repro/lerf root@conn
 虽然 NeRF Studio 中包含了 Instant NGP，但是两个模型的输出不完全相同，所以无法直接采用，最后作罢。
 
 ### Segment Anything Model
+
+## 参考文献
+
+- [FastNeRF: High-Fidelity Neural Rendering at 200FPS](./refs/FastNeRF.pdf)
+- [NeRFReN: Neural Radiance Fields with Reflections](./refs/NeRFReN.pdf)
+- [Instant Neural Graphics Primitives with a Multiresolution Hash Encoding](./refs/InstantNGP.pdf)
+- [Nerfstudio: A Modular Framework for Neural Radiance Field Development](./refs/nerfstudio.pdf)
+- [Sigmoid Loss for Language Image Pre-Training](./refs/SigLIP.pdf)
+- [Segment Anything](./refs/SA.pdf)
+- [NeRRF: 3D Reconstruction and View Synthesis for Transparent and Specular Objects with Neural Refractive-Reflective Fields](./refs/NeRRF.pdf)

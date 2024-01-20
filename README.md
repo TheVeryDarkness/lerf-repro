@@ -246,7 +246,7 @@ rsync -auv -e 'ssh -p 31654' /Users/huangboyi/Projects/lerf-repro/lerf root@conn
 
 我们尝试了很多最近的新工作，并尝试将其整合在一起。
 
-最终我们选择了，将原先模型中的 OpenCLIP 实现替换为 EVA02，并向 LeRF 使用的 NeRF 模型中添加了 SAM 场。
+最终我们选择了，将原先模型中的 OpenCLIP 实现（`timm/ViT-B-16`）替换为 EVA02（`timm/EVA02-B-16`），并向 LeRF 使用的 NeRF 模型中添加了 SAM 场。
 
 ### SigLIP
 
@@ -257,6 +257,14 @@ rsync -auv -e 'ssh -p 31654' /Users/huangboyi/Projects/lerf-repro/lerf root@conn
 ### DINOv2
 
 我们尝试将 LERF 中使用的 DINO 替换为 DINO v2，但是没有明显的改善，并且 DINO v2 只支持 size 为 14 的 patch，替换后会引入修改输入图片尺寸等很多麻烦。
+
+### EVA-02
+
+EVA-02 是一种基于 Transformer 的预训练视觉表示，可以用于重建语言对齐视觉特征。EVA-02 以更少的参数量，表现出比之前的各种 CLIP 实现更好的性能。
+
+EVA-02 提供了四种不同尺寸的模型，其中三种提供了预训练参数。
+
+由于 EVA-02 提供了 CLIP 的实现，我们可以简单地通过修改加载的模型名称，将 LERF 使用的 CLIP 实现替换为 EVA-02 的实现，如将[laion/CLIP-ViT-B-16-laion2B-s34B-b88K](https://huggingface.co/laion/CLIP-ViT-B-16-laion2B-s34B-b88K)替换为[timm/eva02_base_patch16_clip_224.merged2b_s8b_b131k](https://huggingface.co/timm/eva02_base_patch16_clip_224.merged2b_s8b_b131k)。
 
 ### NeRRF
 
@@ -270,6 +278,14 @@ rsync -auv -e 'ssh -p 31654' /Users/huangboyi/Projects/lerf-repro/lerf root@conn
 
 ### Segment Anything Model
 
+SA（Segment Anything）是一个面向图像分割的项目，包含了新任务、新模型和新数据集。SAM（Segment Anything Model）则是 SA 中提出的预训练模型。
+
+该模型具有在不需要额外训练的前提下迁移到不同的图像分布和任务的能力。
+
+我们借助 nerfstudio 的配置能力，在 NeRF 模型中增加了用于辅助模型区分不同物体的 SAM 场。预处理时，会先将图片通过 SAM 转化为嵌入向量；三维场景重建时也会将采样得到的图片通过 SAM 进行分割。并且我们通过引入与 SAM 场相关的 loss 项，将不同物体进行区分。
+
+_不好意思忘记在 SAM 场和 CLIP 场之间加 loss 了。_
+
 ## 参考文献
 
 - [FastNeRF: High-Fidelity Neural Rendering at 200FPS](./refs/FastNeRF.pdf)
@@ -277,17 +293,31 @@ rsync -auv -e 'ssh -p 31654' /Users/huangboyi/Projects/lerf-repro/lerf root@conn
 - [Instant Neural Graphics Primitives with a Multiresolution Hash Encoding](./refs/InstantNGP.pdf)
 - [Nerfstudio: A Modular Framework for Neural Radiance Field Development](./refs/nerfstudio.pdf)
 - [Sigmoid Loss for Language Image Pre-Training](./refs/SigLIP.pdf)
+
+  ```BibTex
+  @misc{zhai2023sigmoid,
+        title={Sigmoid Loss for Language Image Pre-Training},
+        author={Xiaohua Zhai and Basil Mustafa and Alexander Kolesnikov and Lucas Beyer},
+        year={2023},
+        eprint={2303.15343},
+        archivePrefix={arXiv},
+        primaryClass={cs.CV}
+  }
+  ```
+
 - [Segment Anything](./refs/SA.pdf)
 - [NeRRF: 3D Reconstruction and View Synthesis for Transparent and Specular Objects with Neural Refractive-Reflective Fields](./refs/NeRRF.pdf)
 - [EVA-02: A Visual Representation for Neon Genesis](./refs/EVA02.pdf)
 
-```BibTex
-@misc{fang2023eva02,
-      title={EVA-02: A Visual Representation for Neon Genesis},
-      author={Yuxin Fang and Quan Sun and Xinggang Wang and Tiejun Huang and Xinlong Wang and Yue Cao},
-      year={2023},
-      eprint={2303.11331},
-      archivePrefix={arXiv},
-      primaryClass={cs.CV}
-}
-```
+  [repo](https://github.com/google-research/big_vision)
+
+  ```BibTex
+  @misc{fang2023eva02,
+        title={EVA-02: A Visual Representation for Neon Genesis},
+        author={Yuxin Fang and Quan Sun and Xinggang Wang and Tiejun Huang and Xinlong Wang and Yue Cao},
+        year={2023},
+        eprint={2303.11331},
+        archivePrefix={arXiv},
+        primaryClass={cs.CV}
+  }
+  ```

@@ -279,3 +279,15 @@ rsync -auv -e 'ssh -p 31654' /Users/huangboyi/Projects/lerf-repro/lerf root@conn
 - [Sigmoid Loss for Language Image Pre-Training](./refs/SigLIP.pdf)
 - [Segment Anything](./refs/SA.pdf)
 - [NeRRF: 3D Reconstruction and View Synthesis for Transparent and Specular Objects with Neural Refractive-Reflective Fields](./refs/NeRRF.pdf)
+- [EVA-02: A Visual Representation for Neon Genesis](./refs/EVA02.pdf)
+
+```BibTex
+@misc{fang2023eva02,
+      title={EVA-02: A Visual Representation for Neon Genesis},
+      author={Yuxin Fang and Quan Sun and Xinggang Wang and Tiejun Huang and Xinlong Wang and Yue Cao},
+      year={2023},
+      eprint={2303.11331},
+      archivePrefix={arXiv},
+      primaryClass={cs.CV}
+}
+```

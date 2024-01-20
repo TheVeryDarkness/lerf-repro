@@ -1,3 +1,6 @@
 [submodule "big_vision"]
 	path = big_vision
 	url = https://github.com/google-research/big_vision
+[submodule "lerf"]
+	path = lerf
+	url = ./lerf

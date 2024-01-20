@@ -229,16 +229,31 @@ ssh -L 7007:$host:$port $user@$host
 ```
 
 ```sh
-rsync -auv -e "ssh -p $port" ~/.cache/huggingface/hub/$model_name $user@$host:/home/miyan/.cache/huggingface/hub/
+rsync -auv -e "ssh -p $port" ~/.cache/huggingface/hub/$model_name $user@$host:~/.cache/huggingface/hub/
+
+rsync -auv -e 'ssh -p $port' --exclude .git $user@$host:~/sirui-workspace/lerf ~/Projects/lerf-repro/lerf
+
+# Don't commit the line below.
+rsync -auv -e 'ssh -p 6380' ~/.cache/huggingface/hub/models--timm--ViT-B-16-SigLIP-512 miyan@58.214.239.10:/home/miyan/.cache/huggingface/hub/
+
+rsync -auv -e 'ssh -p 31654' ~/.cache/huggingface/hub/models--timm--eva02_large_patch14_clip_224.merged2b_s4b_b131k root@connect.westb.seetacloud.com:/root/.cache/huggingface/hub
 
 python -m pip uninstall -y lerf && python -m pip install ./lerf
+
+ssh -p 31654 root@connect.westb.seetacloud.com
+
+rsync -auv -e 'ssh -p 31654' /Users/huangboyi/Projects/lerf-repro/lerf root@connect.westb.seetacloud.com:/root/autodl-tmp/try
+
+# Don't commit the line below.
+rsync -auv -e 'ssh -p 6380' miyan@58.214.239.10:/home/miyan/sirui-workspace/lerf /Users/huangboyi/Projects/lerf-repro
+rsync -auv -e 'ssh -p 6380' /Users/huangboyi/Projects/lerf-repro/lerf miyan@58.214.239.10:/home/miyan/sirui-workspace
 ```
 
 ## 改进的尝试
 
 我们尝试了很多最近的新工作，并尝试将其整合在一起。
 
-最终我们选择了，将原先模型中的 OpenCLIP 实现替换为 EVA02，并添加了 SAM 场。
+最终我们选择了，将原先模型中的 OpenCLIP 实现替换为 EVA02，并向 LeRF 使用的 NeRF 模型中添加了 SAM 场。
 
 ### SigLIP
 
@@ -259,3 +274,5 @@ python -m pip uninstall -y lerf && python -m pip install ./lerf
 ### Instant NGP
 
 虽然 NeRF Studio 中包含了 Instant NGP，但是两个模型的输出不完全相同，所以无法直接采用，最后作罢。
+
+### Segment Anything Model
